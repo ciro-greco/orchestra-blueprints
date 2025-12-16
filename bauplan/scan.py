@@ -151,11 +151,13 @@ def wap_with_bauplan(
 
 
 if __name__ == "__main__":
-    print("Starting WAP at {}!".format(datetime.now()))
+    import os
 
+    print("Starting WAP at {}!".format(datetime.now()))
+    dir_path = os.path.dirname(os.path.realpath(__file__))
     bauplan_client = bauplan.Client(api_key=os.environ["BAUPLAN_API_KEY"])
 
-    return_object = bauplan_client.run(ref="orchestra.dev_hugo", namespace="bauplan")
+    return_object = bauplan_client.run(project_dir=dir_path, ref="orchestra.dev_hugo", namespace="bauplan")
     job_list = bauplan_client.get_job_logs(job_id_prefix=return_object.job_id)
     for i in job_list:
         print(i.message)
